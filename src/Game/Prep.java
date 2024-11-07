@@ -67,4 +67,5 @@ public class Prep {
             player2.getMinions().remove(0);
         }
     }
+
 }

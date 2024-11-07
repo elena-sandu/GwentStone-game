@@ -33,7 +33,7 @@
   "output" : 3
 }, {
   "command" : "getPlayerTurn",
-  "output" : 1
+  "output" : 2
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
