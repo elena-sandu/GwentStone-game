@@ -520,7 +520,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
@@ -567,7 +567,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
@@ -644,7 +644,7 @@
     "x" : 2,
     "y" : 3
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardAtPosition",
   "x" : 2,
@@ -667,7 +667,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
@@ -678,7 +678,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardAtPosition",
   "x" : 0,
@@ -720,7 +720,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
@@ -756,7 +756,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -792,7 +792,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "cardUsesAttack",
   "cardAttacker" : {
@@ -803,7 +803,7 @@
     "x" : 1,
     "y" : 1
   },
-  "error" : "Attacked card is not of type 'Tank’."
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "useAttackHero",
   "cardAttacker" : {

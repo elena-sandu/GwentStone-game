@@ -345,7 +345,7 @@ public class Commands {
                 attackedNode.put("y", y_attacked);
                 cardsNode.put("cardAttacker", attacksNode);
                 cardsNode.put("cardAttacked", attackedNode);
-                cardsNode.put("error", "Attacked card is not of type 'Tank’.");
+                cardsNode.put("error", "Attacked card is not of type 'Tank'.");
                 output.add(cardsNode);
                 return;
                 }
@@ -472,7 +472,7 @@ public class Commands {
                     attackedNode.put("y", y_attacked);
                     cardsNode.put("cardAttacker", attacksNode);
                     cardsNode.put("cardAttacked", attackedNode);
-                    cardsNode.put("error", "Attacked card is not of type 'Tank’.");
+                    cardsNode.put("error", "Attacked card is not of type 'Tank'.");
                     output.add(cardsNode);
                     return;
                 }
@@ -638,7 +638,7 @@ public class Commands {
             Minions maxHealth = rowAffected.get(0);
             int index = 0;
             for(int i = 0; i < rowAffected.size(); i++) {
-                if(maxHealth.getHealth() > rowAffected.get(i).getHealth()) {
+                if(maxHealth.getHealth() < rowAffected.get(i).getHealth()) {
                     index = i;
                     maxHealth = rowAffected.get(i);
                 }
