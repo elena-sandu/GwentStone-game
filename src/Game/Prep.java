@@ -1,6 +1,5 @@
 package Game;
 
-import fileio.CardInput;
 import fileio.StartGameInput;
 
 import java.util.ArrayList;
@@ -8,17 +7,29 @@ import java.util.ArrayList;
 public class Prep {
     private Players player1 = new Players();
     private Players player2 = new Players();
-    private Game_board board = new Game_board();
+    private gameBoard board = new gameBoard();
     private int index_player_curent ;
     private int player_rounds;
+    public Hero chooseHero(int mana, String description, ArrayList<String> colors,String name) {
+        if(name.equals("Lord Royce")) {
+            return new LordRoyce(mana, 30, description, colors, name);
+        } else if(name.equals("Empress Thorina")) {
+            return new EmpressThorina(mana, 30, description, colors, name);
+        } else if(name.equals("King Mudface")) {
+            return new KingMudface(mana, 30, description, colors, name);
+        } else if(name.equals("General Kocioraw")) {
+            return new GeneralKocioraw(mana, 30, description, colors, name);
+        }
+        return null;
+    }
     public void start(StartGameInput startgame) {
-        Hero hero1 = new Hero(startgame.getPlayerOneHero().getMana(),
-                30, startgame.getPlayerOneHero().getDescription(),startgame.getPlayerOneHero().getColors(),startgame.getPlayerOneHero().getName());
+        Hero hero1 = chooseHero(startgame.getPlayerOneHero().getMana(),
+                 startgame.getPlayerOneHero().getDescription(),startgame.getPlayerOneHero().getColors(),startgame.getPlayerOneHero().getName());
         player1.setHero(hero1);
         player1.setMana(1);
         player1.setManazece(1);
-        Hero hero2 = new Hero(startgame.getPlayerTwoHero().getMana(),
-                30, startgame.getPlayerTwoHero().getDescription(), startgame.getPlayerTwoHero().getColors(), startgame.getPlayerTwoHero().getName());
+        Hero hero2 = chooseHero(startgame.getPlayerTwoHero().getMana(),
+                startgame.getPlayerTwoHero().getDescription(), startgame.getPlayerTwoHero().getColors(), startgame.getPlayerTwoHero().getName());
         player2.setHero(hero2);
         player2.setMana(1);
         player2.setManazece(1);
@@ -36,10 +47,10 @@ public class Prep {
     public Players getPlayer2() {
         return player2;
     }
-    public void setBoard(Game_board board) {
+    public void setBoard(gameBoard board) {
         this.board = board;
     }
-    public Game_board getBoard() {
+    public gameBoard getBoard() {
         return board;
     }
     public void setIndex_player_curent(int index_player_curent) {

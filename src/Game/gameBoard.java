@@ -2,10 +2,10 @@ package Game;
 
 import java.util.ArrayList;
 
-public class Game_board {
+public class gameBoard {
     private ArrayList<ArrayList<Minions>> board;
 
-    public Game_board() {
+    public gameBoard() {
         board = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             board.add(new ArrayList<>());

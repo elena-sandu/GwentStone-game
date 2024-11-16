@@ -12,4 +12,7 @@ public class Hero extends Cards {
     public void setHasAttacked(boolean hasAttacked) {
         this.hasAttacked = hasAttacked;
     }
+    public void useHAbility(ArrayList<Minions> rowAffected) {
+        return;
+    }
 }

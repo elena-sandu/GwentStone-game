@@ -137,7 +137,7 @@ public class Commands {
     }
     public void endPlayerTurn(ArrayNode output) {
         int index = game_p.getIndex_player_curent();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         if(index == 1) {
             for(int i = 2; i < 4; i++) {
@@ -251,7 +251,7 @@ public class Commands {
         ObjectNode TableNode = objectMapper.createObjectNode();
         TableNode.put("command", "getCardsOnTable");
         ArrayNode CardsA = objectMapper.createArrayNode();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         for(ArrayList<Minions> i : gb) {
             ArrayNode auxrow = objectMapper.createArrayNode();
@@ -281,7 +281,7 @@ public class Commands {
         int y_attacks = ac.getCardAttacker().getY();
         int x_attacked = ac.getCardAttacked().getX();
         int y_attacked = ac.getCardAttacked().getY();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         Minions cardAttacker = gb.get(x_attacks).get(y_attacks);
         if (x_attacked < 0 || x_attacked >= gb.size() || y_attacked < 0 || y_attacked >= gb.get(x_attacked).size()) {
@@ -358,7 +358,7 @@ public class Commands {
         }
     }
     public void getCardAtPosition(int x, int y, ArrayNode output) {
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         if (x < 0 || x >= gb.size() || y < 0 || y >= gb.get(x).size()) {
             ObjectNode errorNode = objectMapper.createObjectNode();
@@ -395,7 +395,7 @@ public class Commands {
         int y_attacks = ac.getCardAttacker().getY();
         int x_attacked = ac.getCardAttacked().getX();
         int y_attacked = ac.getCardAttacked().getY();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         Minions cardAttacker = gb.get(x_attacks).get(y_attacks);
         Minions cardAttacked = gb.get(x_attacked).get(y_attacked);
@@ -505,7 +505,7 @@ public class Commands {
     }
     public void useAttackHero(int x, int y, ArrayNode output) {
         int player = game_p.getIndex_player_curent();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         if (x < 0 || x >= gb.size() || y < 0 || y >= gb.get(x).size()) {
             return;
@@ -571,7 +571,7 @@ public class Commands {
     }
     public void useHeroAbility(int x, ArrayNode output) {
         int player = game_p.getIndex_player_curent();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         ArrayList<Minions> rowAffected = gb.get(x);
         Players p;
@@ -630,33 +630,7 @@ public class Commands {
                 return;
             }
         }
-        if(p.getHero().getName().equals("Lord Royce")) {
-            for(Minions m : rowAffected) {
-                m.setFrozen(true);
-            }
-        } else if(p.getHero().getName().equals("Empress Thorina")) {
-            Minions maxHealth = rowAffected.get(0);
-            int index = 0;
-            for(int i = 0; i < rowAffected.size(); i++) {
-                if(maxHealth.getHealth() < rowAffected.get(i).getHealth()) {
-                    index = i;
-                    maxHealth = rowAffected.get(i);
-                }
-            }
-            rowAffected.remove(index);
-        } else if(p.getHero().getName().equals("King Mudface")) {
-            for(Minions m : rowAffected) {
-                int aux = m.getHealth();
-                aux++;
-                m.setHealth(aux);
-            }
-        } else if(p.getHero().getName().equals("General Kocioraw")) {
-            for(Minions m : rowAffected) {
-                int aux = m.getAttackDamage();
-                aux++;
-                m.setAttackDamage(aux);
-            }
-        }
+        p.getHero().useHAbility(rowAffected);
         p.getHero().setHasAttacked(true);
         int newMana = p.getMana() - p.getHero().getMana() ;
         p.setMana(newMana);
@@ -665,7 +639,7 @@ public class Commands {
         ObjectNode TableNode = objectMapper.createObjectNode();
         TableNode.put("command", "getFrozenCardsOnTable");
         ArrayNode CardsA = objectMapper.createArrayNode();
-        Game_board board = game_p.getBoard();
+        gameBoard board = game_p.getBoard();
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         for(ArrayList<Minions> i : gb) {
             ArrayNode auxrow = objectMapper.createArrayNode();

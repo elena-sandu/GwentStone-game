@@ -49,9 +49,6 @@ public class Players {
         }
         mana = mana + manazece;
     }
-    public void decrese_mana(int value) {
-        this.mana = this.mana - value;
-    }
     public void addHand_card(Minions minion) {
         hand_card.add(minion);
     }
