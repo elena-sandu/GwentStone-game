@@ -96,40 +96,4 @@ public class Game_board {
             m.remove(y);
         }
     }
-
-    public void countAttack(int index_player) {
-        if(index_player == 1) {
-            for(int i = 2; i < 4; i++) {
-                for(int j = 0; j < board.get(i).size(); j++) {
-                    Minions minion = board.get(i).get(j);
-                    minion.setAttack(0);
-                }
-            }
-        } else {
-            for(int i = 0; i < 2; i++) {
-                for(int j = 0; j < board.get(i).size(); j++) {
-                    Minions minion = board.get(i).get(j);
-                    minion.setAttack(0);
-                }
-            }
-        }
-    }
-
-    public void useAbility(int index_player) {
-        if(index_player == 1) {
-            for(int i = 2; i < 4; i++) {
-                for(int j = 0; j < board.get(i).size(); j++) {
-                    Minions minion = board.get(i).get(j);
-                    minion.setAbility(0);
-                }
-            }
-        } else {
-            for(int i = 0; i < 2; i++) {
-                for(int j = 0; j < board.get(i).size(); j++) {
-                    Minions minion = board.get(i).get(j);
-                    minion.setAbility(0);
-                }
-            }
-        }
-    }
 }

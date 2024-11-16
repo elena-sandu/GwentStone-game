@@ -11,18 +11,22 @@ import java.util.Random;
 public class SetPlayerCards {
     private Prep game_p;
     private ArrayList<Minions> playerOneMinions;
+    private ArrayList<ArrayList<CardInput>> allDecksPlayerOne;
     private ArrayList<Minions> playerTwoMinions;
+    private ArrayList<ArrayList<CardInput>> allDecksPlayerTwo;
     private Minions card1;
     private Minions card2;
     public SetPlayerCards(Prep game_p) {
         this.game_p = game_p;
         this.playerOneMinions = new ArrayList<>();
         this.playerTwoMinions = new ArrayList<>();
+        this.allDecksPlayerOne = new ArrayList<>();
+        this.allDecksPlayerTwo = new ArrayList<>();
     }
     public void init(StartGameInput game, Input inputData) {
         int shuffleSeed = game.getShuffleSeed();
-        //carti player 1
         ArrayList<ArrayList<CardInput>> deck1 = inputData.getPlayerOneDecks().getDecks();
+        allDecksPlayerOne.addAll(deck1);
         ArrayList<CardInput> un_deck1 = deck1.get(game.getPlayerOneDeckIdx());
         Collections.shuffle(un_deck1, new Random(shuffleSeed));
         ArrayList<Minions> hands = new ArrayList<>();
@@ -32,8 +36,8 @@ public class SetPlayerCards {
             Minions min = new Minions(c.getMana(), c.getHealth(), c.getAttackDamage(), c.getDescription(), c.getColors(), c.getName());
             playerOneMinions.add(min);
         }
-        //carti player 2
         ArrayList<ArrayList<CardInput>> deck2 = inputData.getPlayerTwoDecks().getDecks();
+        allDecksPlayerTwo.addAll(deck2);
         ArrayList<CardInput> un_deck = deck2.get(game.getPlayerTwoDeckIdx());
         Collections.shuffle(un_deck, new Random(shuffleSeed));
         CardInput hand_card2 = un_deck.get(0);
@@ -48,8 +52,11 @@ public class SetPlayerCards {
         game_p.getPlayer1().setMinions(playerOneMinions);
         card1 = new Minions(hand_card.getMana(), hand_card.getHealth(), hand_card.getAttackDamage(), hand_card.getDescription(), hand_card.getColors(), hand_card.getName());
         game_p.getPlayer1().addHand_card(card1);
+        game_p.getPlayer1().setAllDecks(allDecksPlayerOne);
         game_p.getPlayer2().setMinions(playerTwoMinions);
         card2 = new Minions(hand_card2.getMana(), hand_card2.getHealth(), hand_card2.getAttackDamage(), hand_card2.getDescription(), hand_card2.getColors(), hand_card2.getName());
         game_p.getPlayer2().addHand_card(card2);
+        game_p.getPlayer2().setAllDecks(allDecksPlayerTwo);
     }
+
 }

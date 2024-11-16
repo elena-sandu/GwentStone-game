@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Minions extends Cards {
     private int attackDamage;
-    private int frozen;
-    private int attack;
-    private int ability;
+    private boolean frozen;
+    private boolean attack;
+    private boolean ability;
     private int is_tank;
     public Minions(int mana, int health, int attackDamage, String description, ArrayList<String> colors, String name) {
         super(mana, health, description, colors, name);
         this.attackDamage = attackDamage;
-        this.frozen = 0;
+        this.frozen = false;
+        this.attack = false;
+        this.ability = false;
         this.is_tank = tankcard(name);
     }
     public void setAttackDamage(int attackDamage) {
@@ -20,25 +22,22 @@ public class Minions extends Cards {
     public int getAttackDamage() {
         return attackDamage;
     }
-    public void setFrozen(int frozen) {
+    public void setFrozen(boolean frozen) {
         this.frozen = frozen;
     }
-    public int getFrozen() {
+    public boolean getFrozen() {
         return frozen;
     }
-    public void not_frozen() {
-        this.frozen = 0;
-    }
-    public void setAttack(int attack) {
+    public void setAttack(boolean attack) {
         this.attack = attack;
     }
-    public int getAttack() {
+    public boolean getAttack() {
         return attack;
     }
-    public void setAbility(int ability) {
+    public void setAbility(boolean ability) {
         this.ability = ability;
     }
-    public int getAbility() {
+    public boolean getAbility() {
         return ability;
     }
     public void setIs_tank(int is_tank) {
@@ -48,6 +47,8 @@ public class Minions extends Cards {
         return is_tank;
     }
     public int tankcard(String name) {
+        if(name == null)
+            return 0;
         if(name.equals("Goliath") || name.equals("Warden")) {
             return 1;
         }

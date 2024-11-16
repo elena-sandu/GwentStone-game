@@ -1,11 +1,14 @@
 package Game;
 
+import fileio.CardInput;
+
 import java.util.ArrayList;
 
 public class Players {
     private Hero hero;
     private ArrayList<Minions> minions = new ArrayList<>();
     private ArrayList<Minions> hand_card = new ArrayList<>();
+    private ArrayList<ArrayList<CardInput>> allDecks;
     private int mana;
     private int manazece;
     public void setHero(Hero hero) {
@@ -53,4 +56,11 @@ public class Players {
         hand_card.add(minion);
     }
 
+    public ArrayList<ArrayList<CardInput>> getAllDecks() {
+        return allDecks;
+    }
+
+    public void setAllDecks(ArrayList<ArrayList<CardInput>> allDecks) {
+        this.allDecks = allDecks;
+    }
 }

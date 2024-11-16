@@ -75,13 +75,14 @@ public final class Main {
         ArrayList<GameInput> games =  inputData.getGames();
         ArrayNode output = objectMapper.createArrayNode();
         ObjectMapper mapper = new ObjectMapper();
+        Winner winner = new Winner();
         for (GameInput aux : games) {
             StartGameInput game = aux.getStartGame();
             Prep game_p = new Prep();
-            SetPlayerCards newgame = new SetPlayerCards(game_p);
-            newgame.init(game, inputData);
+            SetPlayerCards newGame = new SetPlayerCards(game_p);
+            newGame.init(game, inputData);
             ArrayList<ActionsInput> actions = aux.getActions();
-            Commands commands = new Commands(game_p);
+            Commands commands = new Commands(game_p, winner);
             for (ActionsInput ac : actions) {
                 commands.actions(ac, output);
             }
@@ -89,25 +90,26 @@ public final class Main {
 
 
 
-            //TODO Implement your function here
+        //TODO Implement your function here
 
-            //How to add output to the output array?
-            // There are multiple ways to do this, here is one example:
+        //How to add output to the output array?
+        // There are multiple ways to do this, here is one example:
 
-            //ObjectMapper mapper = new ObjectMapper();
+        //ObjectMapper mapper = new ObjectMapper();
 
-            //ObjectNode objectNode = mapper.createObjectNode();
-            //objectNode.put("field_name", "field_value");
+        //ObjectNode objectNode = mapper.createObjectNode();
+        //objectNode.put("field_name", "field_value");
 
-            //ArrayNode arrayNode = mapper.createArrayNode();
-            //arrayNode.add(objectNode);
+        //ArrayNode arrayNode = mapper.createArrayNode();
+        //arrayNode.add(objectNode);
 
-            //output.add(arrayNode);
-            //output.add(objectNode);
+        //output.add(arrayNode);
+        //output.add(objectNode);
 
 
 
-            ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-            objectWriter.writeValue(new File(filePath2), output);
+
+        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(new File(filePath2), output);
 
     } }

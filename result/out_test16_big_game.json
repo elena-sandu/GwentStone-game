@@ -49,9 +49,6 @@
     "name" : "The Ripper"
   }
 }, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
-}, {
   "command" : "useHeroAbility",
   "affectedRow" : 0,
   "error" : "Not enough mana to use hero's ability."
@@ -67,12 +64,6 @@
     "colors" : [ "Orange", "Red", "Black" ],
     "name" : "The Ripper"
   }
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -94,10 +85,18 @@
   "output" : 2
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getPlayerTurn",
   "output" : 1
@@ -133,10 +132,13 @@
   "output" : 5
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacked card is not of type 'Tank’."
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
+  "gameEnded" : "Player one killed the enemy hero."
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
@@ -218,4 +220,13 @@
     "colors" : [ "Red", "Black" ],
     "name" : "Miraj"
   } ]
+}, {
+  "command" : "getTotalGamesPlayed",
+  "output" : 1
+}, {
+  "command" : "getPlayerTwoWins",
+  "output" : 0
+}, {
+  "command" : "getPlayerOneWins",
+  "output" : 1
 } ]

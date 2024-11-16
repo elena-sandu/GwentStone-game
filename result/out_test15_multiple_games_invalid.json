@@ -23,13 +23,25 @@
   "output" : 2
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacked card is not of type 'Tank’."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacked card is not of type 'Tank’."
+  "cardAttacker" : {
+    "x" : 1,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacked card is not of type 'Tank’."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 2
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
@@ -47,10 +59,18 @@
   }
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 0
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
+  "cardAttacker" : {
+    "x" : 0,
+    "y" : 1
+  },
+  "error" : "Attacked card is not of type 'Tank'."
 }, {
   "command" : "getCardsOnTable",
   "output" : [ [ {
@@ -119,6 +139,15 @@
     "name" : "The Ripper"
   } ]
 }, {
+  "command" : "getTotalGamesPlayed",
+  "output" : 0
+}, {
+  "command" : "getPlayerTwoWins",
+  "output" : 0
+}, {
+  "command" : "getPlayerOneWins",
+  "output" : 0
+}, {
   "command" : "placeCard",
   "handIdx" : 0,
   "error" : "Not enough mana to place card on table."
@@ -136,9 +165,6 @@
 }, {
   "command" : "getPlayerTurn",
   "output" : 2
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
@@ -161,15 +187,6 @@
 }, {
   "command" : "getFrozenCardsOnTable",
   "output" : [ ]
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
-}, {
-  "command" : "useAttackHero",
-  "error" : "Attacker card has already attacked this turn."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 2,
@@ -270,4 +287,13 @@
     "colors" : [ "Brown", "Blue" ],
     "name" : "Warden"
   } ]
+}, {
+  "command" : "getTotalGamesPlayed",
+  "output" : 0
+}, {
+  "command" : "getPlayerTwoWins",
+  "output" : 0
+}, {
+  "command" : "getPlayerOneWins",
+  "output" : 0
 } ]

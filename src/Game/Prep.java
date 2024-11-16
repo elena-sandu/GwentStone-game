@@ -1,5 +1,6 @@
 package Game;
 
+import fileio.CardInput;
 import fileio.StartGameInput;
 
 import java.util.ArrayList;
@@ -67,5 +68,4 @@ public class Prep {
             player2.getMinions().remove(0);
         }
     }
-
 }

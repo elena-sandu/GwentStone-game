@@ -10,8 +10,10 @@ import java.util.ArrayList;
 public class Commands {
     private Prep game_p;
     private ObjectMapper objectMapper;
-    public Commands(Prep game_p) {
+    private Winner winner;
+    public Commands(Prep game_p, Winner winner) {
         this.game_p = game_p;
+        this.winner = winner;
         this.objectMapper = new ObjectMapper();
     }
     public void actions(ActionsInput ac, ArrayNode output) {
@@ -38,11 +40,17 @@ public class Commands {
         } else if(ac.getCommand().equals("cardUsesAbility")) {
             cardUsesAbility(ac, output);
         } else if(ac.getCommand().equals("useAttackHero")) {
-            useAttackHero(ac.getX(), ac.getY(), output);
+            useAttackHero(ac.getCardAttacker().getX(), ac.getCardAttacker().getY(), output);
         } else if(ac.getCommand().equals("useHeroAbility")) {
             useHeroAbility(ac.getAffectedRow(), output);
         } else if(ac.getCommand().equals("getFrozenCardsOnTable")) {
             getFrozenCardsOnTable(output);
+        } else if(ac.getCommand().equals("getTotalGamesPlayed")) {
+            getTotalGamesPlayed(output, winner);
+        } else if(ac.getCommand().equals("getPlayerOneWins")) {
+            getPlayerOneWins(output, winner);
+        } else if(ac.getCommand().equals("getPlayerTwoWins")) {
+            getPlayerTwoWins(output, winner);
         }
     }
 
@@ -135,12 +143,12 @@ public class Commands {
             for(int i = 2; i < 4; i++) {
                 for(int j = 0; j < gb.get(i).size(); j++) {
                     Minions minion = gb.get(i).get(j);
-                    minion.not_frozen();
+                    minion.setFrozen(false);
+                    minion.setAbility(false);
+                    minion.setAttack(false);
                 }
             }
-            game_p.getBoard().countAttack(index);
-            game_p.getBoard().useAbility(index);
-            game_p.getPlayer1().getHero().setHasAttacked(0);
+            game_p.getPlayer1().getHero().setHasAttacked(false);
             game_p.setIndex_player_curent(2);
             int a = game_p.getPlayer_rounds();
             a++;
@@ -149,12 +157,12 @@ public class Commands {
             for(int i = 0; i < 2; i++) {
                 for(int j = 0; j < gb.get(i).size(); j++) {
                     Minions minion = gb.get(i).get(j);
-                    minion.not_frozen();
+                    minion.setFrozen(false);
+                    minion.setAbility(false);
+                    minion.setAttack(false);
                 }
             }
-            game_p.getBoard().countAttack(index);
-            game_p.getBoard().useAbility(index);
-            game_p.getPlayer2().getHero().setHasAttacked(0);
+            game_p.getPlayer2().getHero().setHasAttacked(false);
             game_p.setIndex_player_curent(1);
             int a = game_p.getPlayer_rounds();
             a++;
@@ -295,7 +303,7 @@ public class Commands {
             output.add(cardsNode);
             return;
         }
-        if (cardAttacker.getAttack() == 1 || cardAttacker.getAbility() == 1) {
+        if (cardAttacker.getAttack() == true || cardAttacker.getAbility() == true) {
             ObjectNode cardsNode = objectMapper.createObjectNode();
             cardsNode.put("command", "cardUsesAttack");
             ObjectNode attacksNode = objectMapper.createObjectNode();
@@ -310,7 +318,7 @@ public class Commands {
             output.add(cardsNode);
             return;
         }
-        if (cardAttacker.getFrozen() == 1) {
+        if (cardAttacker.getFrozen() == true) {
             ObjectNode cardsNode = objectMapper.createObjectNode();
             cardsNode.put("command", "cardUsesAttack");
             ObjectNode attacksNode = objectMapper.createObjectNode();
@@ -344,7 +352,7 @@ public class Commands {
         }
         int dif = cardAttacked.getHealth() - cardAttacker.getAttackDamage();
         cardAttacked.setHealth(dif);
-        cardAttacker.setAttack(1);
+        cardAttacker.setAttack(true);
         if (cardAttacked.getHealth() <= 0) {
             board.remove(x_attacked, y_attacked);
         }
@@ -391,7 +399,7 @@ public class Commands {
         ArrayList<ArrayList<Minions>> gb = board.getBoard();
         Minions cardAttacker = gb.get(x_attacks).get(y_attacks);
         Minions cardAttacked = gb.get(x_attacked).get(y_attacked);
-        if(cardAttacker.getFrozen() == 1) {
+        if(cardAttacker.getFrozen() == true) {
             ObjectNode cardsNode = objectMapper.createObjectNode();
             cardsNode.put("command", "cardUsesAbility");
             ObjectNode attacksNode = objectMapper.createObjectNode();
@@ -406,7 +414,7 @@ public class Commands {
             output.add(cardsNode);
             return;
         }
-        if(cardAttacker.getAttack() == 1 || cardAttacker.getAbility() == 1) {
+        if(cardAttacker.getAttack() == true || cardAttacker.getAbility() == true) {
             ObjectNode cardsNode = objectMapper.createObjectNode();
             cardsNode.put("command", "cardUsesAbility");
             ObjectNode attacksNode = objectMapper.createObjectNode();
@@ -493,7 +501,7 @@ public class Commands {
             int aux = cardAttacked.getHealth();
             cardAttacked.setHealth(aux + 2);
         }
-        cardAttacker.setAbility(1);
+        cardAttacker.setAbility(true);
     }
     public void useAttackHero(int x, int y, ArrayNode output) {
         int player = game_p.getIndex_player_curent();
@@ -503,24 +511,24 @@ public class Commands {
             return;
         }
         Minions cardAttacker = gb.get(x).get(y);
-        if(cardAttacker.getFrozen() == 1) {
+        if(cardAttacker.getFrozen() == true) {
             ObjectNode errorNode = objectMapper.createObjectNode();
             errorNode.put("command", "useAttackHero");
             ObjectNode atNode = objectMapper.createObjectNode();
             atNode.put("x", x);
             atNode.put("y", y);
-            errorNode.put("error", atNode);
+            errorNode.put("cardAttacker", atNode);
             errorNode.put("error", "Attacker card is frozen.");
             output.add(errorNode);
             return;
         }
-        if(cardAttacker.getAttack() == 1 || cardAttacker.getAbility() == 1) {
+        if(cardAttacker.getAttack() == true || cardAttacker.getAbility() == true) {
             ObjectNode errorNode = objectMapper.createObjectNode();
             errorNode.put("command", "useAttackHero");
             ObjectNode atNode = objectMapper.createObjectNode();
             atNode.put("x", x);
             atNode.put("y", y);
-            errorNode.put("error", atNode);
+            errorNode.put("cardAttacker", atNode);
             errorNode.put("error", "Attacker card has already attacked this turn.");
             output.add(errorNode);
             return;
@@ -531,8 +539,8 @@ public class Commands {
             ObjectNode atNode = objectMapper.createObjectNode();
             atNode.put("x", x);
             atNode.put("y", y);
-            errorNode.put("error", atNode);
-            errorNode.put("error", "Attacked card is not of type 'Tank’.");
+            errorNode.put("cardAttacker", atNode);
+            errorNode.put("error", "Attacked card is not of type 'Tank'.");
             output.add(errorNode);
             return;
         }
@@ -541,20 +549,22 @@ public class Commands {
             int h = game_p.getPlayer2().getHero().getHealth();
             int newH = h - aux;
             game_p.getPlayer2().getHero().setHealth(newH);
-            cardAttacker.setAttack(1);
+            cardAttacker.setAttack(true);
             if(game_p.getPlayer2().getHero().getHealth() <= 0) {
                 ObjectNode endNode = objectMapper.createObjectNode();
                 endNode.put("gameEnded", "Player one killed the enemy hero.");
                 output.add(endNode);
+                winner.PlayerOneWins();
             }
         } else {
             int h = game_p.getPlayer1().getHero().getHealth();
             game_p.getPlayer1().getHero().setHealth(h - aux);
-            cardAttacker.setAttack(1);
+            cardAttacker.setAttack(true);
             if(game_p.getPlayer1().getHero().getHealth() <= 0) {
                 ObjectNode endNode = objectMapper.createObjectNode();
                 endNode.put("gameEnded", "Player two killed the enemy hero.");
                 output.add(endNode);
+                winner.PlayerTwoWins();
             }
         }
 
@@ -579,7 +589,7 @@ public class Commands {
             output.add(errorNode);
             return;
         }
-        if(p.getHero().getHasAttacked() == 1) {
+        if(p.getHero().getHasAttacked() == true) {
             ObjectNode errorNode = objectMapper.createObjectNode();
             errorNode.put("command", "useHeroAbility");
             errorNode.put("affectedRow", x);
@@ -622,7 +632,7 @@ public class Commands {
         }
         if(p.getHero().getName().equals("Lord Royce")) {
             for(Minions m : rowAffected) {
-                m.setFrozen(1);
+                m.setFrozen(true);
             }
         } else if(p.getHero().getName().equals("Empress Thorina")) {
             Minions maxHealth = rowAffected.get(0);
@@ -647,7 +657,7 @@ public class Commands {
                 m.setAttackDamage(aux);
             }
         }
-        p.getHero().setHasAttacked(1);
+        p.getHero().setHasAttacked(true);
         int newMana = p.getMana() - p.getHero().getMana() ;
         p.setMana(newMana);
     }
@@ -660,7 +670,7 @@ public class Commands {
         for(ArrayList<Minions> i : gb) {
             ArrayNode auxrow = objectMapper.createArrayNode();
             for(Minions minion : i) {
-                if(minion.getFrozen() == 1) {
+                if(minion.getFrozen() == true) {
                     ObjectNode one_card = objectMapper.createObjectNode();
                     one_card.put("mana", minion.getMana());
                     one_card.put("attackDamage", minion.getAttackDamage());
@@ -682,6 +692,24 @@ public class Commands {
             TableNode.set("output", objectMapper.createArrayNode());
         }
         output.add(TableNode);
+    }
+    public void getTotalGamesPlayed(ArrayNode output, Winner winner) {
+        ObjectNode gamesPlayed = objectMapper.createObjectNode();
+        gamesPlayed.put("command", "getTotalGamesPlayed");
+        gamesPlayed.put("output", winner.getGamesPlayed());
+        output.add(gamesPlayed);
+    }
+    public void getPlayerOneWins(ArrayNode output, Winner winner) {
+        ObjectNode win = objectMapper.createObjectNode();
+        win.put("command", "getPlayerOneWins");
+        win.put("output", winner.getWinplayer1());
+        output.add(win);
+    }
+    public void getPlayerTwoWins(ArrayNode output, Winner winner) {
+        ObjectNode win = objectMapper.createObjectNode();
+        win.put("command", "getPlayerTwoWins");
+        win.put("output", winner.getWinplayer2());
+        output.add(win);
     }
 }
 
